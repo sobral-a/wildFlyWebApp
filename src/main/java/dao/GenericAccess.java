@@ -7,6 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -20,13 +21,13 @@ public class GenericAccess
     @PersistenceContext(unitName = "context")
     private EntityManager em;
 
-    @Transaction
+    @Transactional
     public <T> void add(T object)
     {
         em.persist(object);
     }
 
-    @Transaction
+    @Transactional
     public <T> void delete(Class<T> type,Integer id)
     {
 
@@ -34,7 +35,7 @@ public class GenericAccess
         em.remove(obj);
     }
 
-    @Transaction
+    @Transactional
     public <T> List<T> list(T type)
     {
         List<T> list = em.createQuery("Select a from " + type.getClass().getSimpleName()  + " a")
@@ -42,7 +43,7 @@ public class GenericAccess
         return list;
     }
 
-    @Transaction
+    @Transactional
     public <T> T getById(Class<T> type, Integer id)
     {
         T obj = em.find(type, id);
