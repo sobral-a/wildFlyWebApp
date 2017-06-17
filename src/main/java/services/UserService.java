@@ -18,7 +18,6 @@ public class UserService
     @Inject
     private GenericAccess userAccess;
 
-    @Transactional
     public void add(String login, String email)
     {
         User user = new User();
